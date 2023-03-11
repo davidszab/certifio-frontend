@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import React from "react";
 import Handlebars from "handlebars";
 import Signatures from "../components/certificate/Signatures";

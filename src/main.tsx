@@ -91,8 +91,6 @@ const router = createBrowserRouter([
 	}
 ]);
 
-window.axios = axios;
-
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 	//   <React.StrictMode>
 	<AuthProvider>

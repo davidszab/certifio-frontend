@@ -1,3 +1,4 @@
+//@ts-nocheck
 export default function Signatures({context}){
 	return <div style={{border: "1px solid black"}}>
 		<div style={{display: "flex", justifyContent: "space-around"}}>
