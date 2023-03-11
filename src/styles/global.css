@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+.logo-navbar  {
+	height: 100%;
+	padding: 0.7rem 0rem;
+	display: flex;
+}
+
+.logo-navbar img {
+	height: 100%;
+}
+
+.logo-sidebar img{
+	width: 100%;
+	padding: 2rem;
+}
+
+@media print {
+	* {
+		visibility: hidden;
+	}
+
+	.print, .print  * {
+		visibility: visible;
+	}
+}

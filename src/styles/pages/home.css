@@ -1,0 +1,14 @@
+.home-card {
+	padding-bottom: 1rem;
+}
+
+.home-card .ant-card-body {
+	display: flex;
+	flex-direction: column;
+	height: 85%;
+	padding-top: 1.5rem;
+}
+
+.home-card .ant-card-body button {
+	margin-top: auto;
+}
