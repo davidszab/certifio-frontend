@@ -24,99 +24,144 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useInfo } from "../../lib/info";
 
-function LogoutButton(){
-	const {logout} = useAuth();
-	return <Popconfirm
-    title="Kijelentkezés"
-    description="Biztosan ki szeretne jelentkezni?"
-    okText="Igen"
-	okButtonProps={{danger: true}}
-    cancelText="Nem"
-	cancelButtonProps={{danger: true}}
-	onConfirm={() => logout()}
-	icon={<InlineIcon icon={"mdi:logout"}/>}
-  	>
-		<Button danger>Kijelentkezés</Button>
-  	</Popconfirm>
+function LogoutButton() {
+	const { logout } = useAuth();
+	return (
+		<Popconfirm
+			title="Kijelentkezés"
+			description="Biztosan ki szeretne jelentkezni?"
+			okText="Igen"
+			okButtonProps={{ danger: true }}
+			cancelText="Nem"
+			cancelButtonProps={{ danger: true }}
+			onConfirm={() => logout()}
+			icon={<InlineIcon icon={"mdi:logout"} />}
+		>
+			<Button danger>Kijelentkezés</Button>
+		</Popconfirm>
+	);
 }
 
 function DashboardButtons() {
-	const {user} = useAuth();
+	const { user } = useAuth();
 	const navigate = useNavigate();
-	return <Space>
-		{user && user.isAdmin && <Button onClick={() => navigate("/admin")}>Adminisztratív felület</Button>}
-		<LogoutButton/>
-	</Space>
+	return (
+		<Space>
+			{user && user.isAdmin && (
+				<Button onClick={() => navigate("/admin")}>
+					Adminisztratív felület
+				</Button>
+			)}
+			<LogoutButton />
+		</Space>
+	);
 }
 
 export default function Dashboard() {
-	const {user} = useAuth();
-	const {owner} = useInfo();
+	const { user } = useAuth();
+	const { owner } = useInfo();
 	const [certificates, setCertificates] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		if(user){
+		if (user) {
 			const fetchData = async () => {
-				try{
+				try {
 					const start = new Date();
 					const resp = await axios.get("/certificates");
 					const data = resp.data.map((e: any) => {
-						return {id: e.id, title: e.title, date: new Date(e.date)}
+						return { id: e.id, title: e.title, date: new Date(e.date) };
 					});
 					const end = new Date();
 					console.log(end.getTime() - start.getTime());
-					const delay = (end.getTime() - start.getTime()) >= 1000 ? 0 : 1000;
+					const delay = end.getTime() - start.getTime() >= 1000 ? 0 : 1000;
 					setTimeout(() => {
 						setCertificates(data);
 						setIsLoading(false);
 					}, delay);
-				}catch(err){
+				} catch (err) {
 					console.error(err);
 				}
-			}
+			};
 			fetchData();
 		}
-	}, [user])
+	}, [user]);
 
 	if (!user) return null;
 
 	const items: TabsProps["items"] = [
 		{
 			key: "tab1",
-			label: <span><InlineIcon icon={"mdi:view-list-outline"}/> Oklevelek</span>,
-			children: <CertificateTable certificates={certificates} isLoading={isLoading}/>
+			label: (
+				<span>
+					<InlineIcon icon={"mdi:view-list-outline"} />
+					Oklevelek
+				</span>
+			),
+			children: (
+				<CertificateTable certificates={certificates} isLoading={isLoading} />
+			)
 		},
 		{
 			key: "tab2",
-			label: <span><InlineIcon icon={"mdi:timeline-text-outline"}/> Idővonal</span>,
-			children: <UserTimeline certificates={certificates} isLoading={isLoading}/>
+			label: (
+				<span>
+					<InlineIcon icon={"mdi:timeline-text-outline"} />
+					Idővonal
+				</span>
+			),
+			children: (
+				<UserTimeline certificates={certificates} isLoading={isLoading} />
+			)
 		},
 		{
 			key: "tab3",
-			label: <span><InlineIcon icon={"mdi:account-details-outline"}/> Személyes adatok</span>,
-			children: <UserDetails/>
+			label: (
+				<span>
+					<InlineIcon icon={"mdi:account-details-outline"} />
+					Személyes adatok
+				</span>
+			),
+			children: <UserDetails />
 		}
 	];
 	return (
 		<>
 			<Row justify={"center"}>
 				<Col xs={24} md={20} lg={15} xl={12}>
-					<Card title={`Személyes oldal`} extra={<DashboardButtons/>}>
-						<div style={{display: "flex", alignItems: "center"}}>
+					<Card title={`Személyes oldal`} extra={<DashboardButtons />}>
+						<div style={{ display: "flex", alignItems: "center" }}>
 							<div>
-								<h1>{user.lastName} {user.firstName}</h1>
-								<p>Adatkezelő: <i>{owner.name}</i></p>
+								<h1>
+									{user.lastName} {user.firstName}
+								</h1>
+								<p>
+									Adatkezelő: <i>{owner.name}</i>
+								</p>
 							</div>
-							<Card style={{marginLeft: "auto"}}>
-								{isLoading && <Spin><Statistic value={0} suffix={" db"} title={"Nyilvántartott oklevelek"} /></Spin>}
-								{!isLoading && <Statistic value={certificates.length} suffix={" db"} title={"Nyilvántartott oklevelek"} />}
+							<Card style={{ marginLeft: "auto" }}>
+								{isLoading && (
+									<Spin>
+										<Statistic
+											value={0}
+											suffix={" db"}
+											title={"Nyilvántartott oklevelek"}
+										/>
+									</Spin>
+								)}
+								{!isLoading && (
+									<Statistic
+										value={certificates.length}
+										suffix={" db"}
+										title={"Nyilvántartott oklevelek"}
+									/>
+								)}
 							</Card>
 						</div>
 					</Card>
-					<br/>
+					<br />
 					<Card>
-						<Tabs items={items} centered />
+						<Tabs items={items} centered size={"small"}/>
 					</Card>
 				</Col>
 			</Row>
@@ -125,18 +170,24 @@ export default function Dashboard() {
 }
 
 interface CertificateTableType {
-	id: string
-	title: string
-	date: Date
+	id: string;
+	title: string;
+	date: Date;
 }
 
-function CertificateTable({certificates, isLoading}: {certificates: CertificateTableType[], isLoading: boolean}){
+function CertificateTable({
+	certificates,
+	isLoading
+}: {
+	certificates: CertificateTableType[];
+	isLoading: boolean;
+}) {
 	const navigate = useNavigate();
 	const columns: ColumnsType<CertificateTableType> = [
 		{
 			key: "1",
 			title: "Megnevezés",
-			dataIndex: "title",
+			dataIndex: "title"
 		},
 		{
 			key: "2",
@@ -152,48 +203,87 @@ function CertificateTable({certificates, isLoading}: {certificates: CertificateT
 		{
 			key: "4",
 			dataIndex: "id",
-			render: (text) => <Button onClick={() => navigate(`/c/${text}`)}><InlineIcon icon={"mdi:eye"}/></Button>,
+			render: (text) => (
+				<Button onClick={() => navigate(`/c/${text}`)}>
+					<InlineIcon icon={"mdi:eye"} />
+				</Button>
+			),
 			align: "center"
 		}
-	]
-	return <>
-		{isLoading && <Spin><Table columns={columns} dataSource={certificates} bordered pagination={false} size={"small"} scroll={{x: true}} locale={{emptyText: "Nincs rögzített oklevele."}}/></Spin>}
-		{!isLoading && <Table columns={columns} dataSource={certificates} bordered pagination={false} size={"small"} scroll={{x: true}} locale={{emptyText: "Nincs rögzített oklevele."}}/>}
-
-	</>
+	];
+	return (
+		<>
+			{isLoading && (
+				<Spin>
+					<Table
+						columns={columns}
+						dataSource={certificates}
+						bordered
+						pagination={false}
+						size={"small"}
+						scroll={{ x: true }}
+						locale={{ emptyText: "Nincs rögzített oklevele." }}
+					/>
+				</Spin>
+			)}
+			{!isLoading && (
+				<Table
+					columns={columns}
+					dataSource={certificates}
+					bordered
+					pagination={false}
+					size={"small"}
+					scroll={{ x: true }}
+					locale={{ emptyText: "Nincs rögzített oklevele." }}
+				/>
+			)}
+		</>
+	);
 }
 
-function UserTimeline({isLoading, certificates}: {isLoading: boolean, certificates: CertificateTableType[]}){
+function UserTimeline({
+	isLoading,
+	certificates
+}: {
+	isLoading: boolean;
+	certificates: CertificateTableType[];
+}) {
 	const { user } = useAuth();
 	const [items, setItems] = useState<TimelineItemProps[]>([]);
 
 	useEffect(() => {
-		if(!isLoading){
+		if (!isLoading) {
 			const items: TimelineItemProps[] = certificates.map((e) => {
 				return {
 					label: e.date.toLocaleString("hu"),
-					children: <div>
-						<b>Oklevél kiadás</b>
-						<p>{e.title} ({e.id})</p>
-					</div>
-				}
+					children: (
+						<div>
+							<b>Oklevél kiadás</b>
+							<p>
+								{e.title} ({e.id})
+							</p>
+						</div>
+					)
+				};
 			});
 			items.unshift({
-				label: user.createdAt.toLocaleString("hu"), 
-				children: <div>
-					<b>Nyilvántartásba véve.</b>
-					<p>Az Ön személyes adatai rögzítésre kerültek a rendszerben.</p>
-				</div>
-			})
+				label: user.createdAt.toLocaleString("hu"),
+				children: (
+					<div>
+						<b>Nyilvántartásba véve.</b>
+						<p>Az Ön személyes adatai rögzítésre kerültek a rendszerben.</p>
+					</div>
+				)
+			});
 			setItems(items);
 		}
-	},[isLoading])
+	}, [isLoading]);
 
-	return <Timeline items={items} mode={"left"} reverse={true}/>;
+	return <Timeline items={items} mode={"left"} reverse={true} />;
 }
 
 function UserDetails() {
-	const {user}= useAuth();
+	const { user } = useAuth();
 	const fields = [
 		{
 			label: "Vezetéknév",
@@ -217,14 +307,19 @@ function UserDetails() {
 			key: "updatedAt",
 			modifier: (v: Date) => v.toLocaleString("hu")
 		}
-	]
+	];
 
 	return (
 		<>
 			<Row gutter={[16, 16]}>
-				{fields.map((e) => <Col xs={24} lg={12}>
-					<Statistic title={e.label} value={e.modifier ? e.modifier(user[e.key]) : user[e.key]} />
-				</Col>)}
+				{fields.map((e) => (
+					<Col xs={24} lg={12}>
+						<Statistic className="user-data"
+							title={e.label}
+							value={e.modifier ? e.modifier(user[e.key]) : user[e.key]}
+						/>
+					</Col>
+				))}
 			</Row>
 		</>
 	);

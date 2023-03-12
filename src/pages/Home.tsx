@@ -1,4 +1,4 @@
-import { Row, Col, Card, Button } from "antd";
+import { Row, Col, Card, Button, Skeleton } from "antd";
 import { Icon } from "@iconify/react";
 import "../styles/pages/home.css";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -96,7 +96,7 @@ export default function Home() {
 	const {owner} = useInfo();
 	return (
 		<>
-			{owner && <h1 style={{textAlign: "center", marginBottom: "3rem", fontSize: "1.5rem"}}>Üdvözöljük a(z) {owner.name} rendszerében!</h1>}
+			{owner.name && <h1 style={{textAlign: "center", marginBottom: "3rem", fontSize: "1.5rem"}}>Üdvözöljük a(z) {owner.name} rendszerében!</h1>}
 			<Row gutter={[16, 32]} justify={"center"}>
 				<QuickView />
 				<Authentication />

@@ -38,11 +38,8 @@
 	padding: 2rem;
 }
 
-.fullscreen-spinner {
-	height: calc(100vh - 200px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.user-data .ant-statistic-content-value {
+	font-size: 1.1rem;
 }
 
 @media print {

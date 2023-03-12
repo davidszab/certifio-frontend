@@ -1,19 +1,23 @@
 import { Row, Col, Card, Collapse, Table } from "antd";
+import { useNavigation, useSearchParams } from "react-router-dom";
 import { useInfo } from "../lib/info";
 const { Panel } = Collapse;
+import { useRef } from "react";
 
 function OwnerDataTable() {
 	const { owner } = useInfo();
-	const datasource: {name: string, value: string | JSX.Element}[] = [{ name: "Név", value: owner.name }];
+	const datasource: {name: string, value: string | JSX.Element, key: string}[] = [{ name: "Név", value: owner.name, key: "dName" }];
 	if (owner.address) {
 		datasource.push({
 			name: "Cím",
+			key: "dAddress",
 			value: `${owner.address.postalCode} ${owner.address.city} ${owner.address.street} (${owner.address.country})`
 		});
 	}
 	if (owner.contact) {
 		datasource.push({
 			name: "Kapcsolattartó",
+			key: "dContact",
 			value: (
 				<a href={`mailto:${owner.contact.email}`}>
 					{owner.contact.name} ({owner.contact.email})
@@ -24,17 +28,19 @@ function OwnerDataTable() {
 	if (owner.website) {
 		datasource.push({
 			name: "Honlap",
+			key: "dWebsite",
 			value: <a href={owner.website}>{owner.website}</a>
 		});
 	}
 	return (
 		<Table
 			title={() => <b>Az üzemeltető, adatkezelő adatai:</b>}
-			columns={[{ dataIndex: "name" }, { dataIndex: "value" }]}
+			columns={[{ dataIndex: "name", key: "name" }, { dataIndex: "value", key: "value" }]}
 			dataSource={datasource}
 			pagination={false}
 			showHeader={false}
 			bordered
+			scroll={{x: true}}
 		/>
 	);
 }
@@ -148,6 +154,8 @@ const projectQuestions = [
 ];
 
 export default function About() {
+	const [searchParams, setSearchParams] = useSearchParams();
+	const contactSelected = searchParams.has("contact");
 	return (
 		<Row gutter={[16, 32]} justify={"center"}>
 			<Col xs={24} md={18} lg={16} xl={12}>
@@ -157,7 +165,7 @@ export default function About() {
 						felmerülő kérdéseket és azokra adott átfogó válaszainkat.
 					</p>
 					<h1>Kérdések a rendszer használatáról</h1>
-					<Collapse>
+					<Collapse defaultActiveKey={contactSelected ? userQuestions.length - 1 : undefined}>
 						{userQuestions.map((q, i) => (
 							<Panel header={q.question} key={i}>
 								{q.answer}

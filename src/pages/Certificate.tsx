@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import Frame from "../components/certificate/Frame";
+import FullscreenSpinner from "../components/FullscreenSpinner";
 import {Template, templateToComponent} from "../lib/template";
 
 export default function Certificate(){
@@ -37,7 +38,7 @@ export default function Certificate(){
 		}
 	}, [id]);
 	if(isLoading)
-		return <div className="fullscreen-spinner"><Spin/></div>
+		return <FullscreenSpinner/>
 	if(isNotFound)
 		return <Row justify={"center"}>
 			<Col xs={24} sm={20} md={18} lg={14} xl={10} xxl={8}>
