@@ -50,11 +50,11 @@ const router = createBrowserRouter([
 				path: "about",
 				element: <About/>
 			},
-			{
-				path: "c/:id",
-				element: <Certificate />
-			}
-		]
+		],
+	},
+	{
+		path: "c/:id",
+		element: <Certificate />
 	},
 	{
 		path: "/admin",

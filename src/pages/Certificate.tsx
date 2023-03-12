@@ -20,7 +20,6 @@ export default function Certificate(){
 				try{
 					
 					const resp = await axios.get(`certificates/${id}`);
-					console.log(resp);
 					setData(resp.data);
 				}
 				catch(e){
@@ -48,7 +47,11 @@ export default function Certificate(){
 			</Col>
 		</Row>
 	
-	return <Frame>
-		{data && data.template.map((t, i) => templateToComponent(t, i.toString(), data.context))}
-	</Frame>
+	return <div className="certificate-positioner">
+		{data && 
+		<Frame frameColor={data.frameColor}>
+			{data.template.map((t, i) => templateToComponent(t, i.toString(), data.context))}
+			<div className="certificate-id">ID: {data.context.certificate.id}</div>
+		</Frame>}
+	</div>
 }

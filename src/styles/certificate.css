@@ -1,20 +1,104 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap");
+
+.certificate-positioner {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
 .certificate-frame {
+	width: 100%;
 	max-width: 1300px;
 	margin: 0 auto;
 	padding: 2.5rem;
-	background-color: blue;
 	box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 5px;
 	font-family: "Merriweather", serif;
 	font-size: medium;
 }
 
 .certificate-content {
-	min-height: 60vh;
+	padding: 0.5rem;
+	min-height: 75vh;
 	background-color: white;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
 	align-items: center;
+	text-align: center;
+}
+
+.certificate-content h1 {
+	margin: 1.2rem 0;
+}
+
+.certificate-content h2 {
+	margin: 0.75rem 0;
+}
+
+.certificate-content h3 {
+	margin: 0.5rem 0;
+}
+
+@media (min-width: 750px) {
+	.certificate-header {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+	}
+}
+
+.certificate-header {
+	margin-top: 1rem;
+	margin-bottom: 1.25rem;
+}
+
+.certificate-header img {
+	min-width: 150px;
+    max-width: 200px;
+}
+
+.certificate-header h1 {
+	font-family: Montserrat;
+    font-weight: 400;
+    font-size: 50px;
+    letter-spacing: 10px;
+    margin: 0;
+}
+
+@media screen and (min-width: 750px) {
+	.certificate-signatures {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		justify-content: center;
+		min-width: 75%;
+	}
+
+	.certificate-signatures div {
+		flex: 1;
+		max-width: 25%;
+		margin: 0;
+	}
+}
+
+.certificate-signatures div {
+    margin: 1rem auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+	align-items: center;
+}
+
+.certificate-signatures div img {
+	max-height: 100px;
+	margin-bottom: 1rem;
+}
+
+.certificate-id {
+	margin-top: auto;
+	margin-left: auto;
+	font-family: monospace;
+	font-size: larger;
 }

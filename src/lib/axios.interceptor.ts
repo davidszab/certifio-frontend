@@ -2,7 +2,6 @@ import axios from "axios";
 
 const backendURL = import.meta.env.PUBLIC_BACKEND_URL;
 if(backendURL){
-	console.log(backendURL);
 	axios.interceptors.request.use((config) => {
 		config.baseURL = `${backendURL}/`
 		return config;
