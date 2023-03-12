@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import { ColumnsType } from "antd/es/table";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useInfo } from "../../lib/info";
 
 function LogoutButton(){
 	const {logout} = useAuth();
@@ -50,6 +51,7 @@ function DashboardButtons() {
 
 export default function Dashboard() {
 	const {user} = useAuth();
+	const {owner} = useInfo();
 	const [certificates, setCertificates] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -100,9 +102,12 @@ export default function Dashboard() {
 		<>
 			<Row justify={"center"}>
 				<Col xs={24} md={20} lg={15} xl={12}>
-					<Card title={"Személyes oldal"} extra={<DashboardButtons/>}>
+					<Card title={`Személyes oldal`} extra={<DashboardButtons/>}>
 						<div style={{display: "flex", alignItems: "center"}}>
-							<h1>{user.lastName} {user.firstName}</h1>
+							<div>
+								<h1>{user.lastName} {user.firstName}</h1>
+								<p>Adatkezelő: <i>{owner.name}</i></p>
+							</div>
 							<Card style={{marginLeft: "auto"}}>
 								{isLoading && <Spin><Statistic value={0} suffix={" db"} title={"Nyilvántartott oklevelek"} /></Spin>}
 								{!isLoading && <Statistic value={certificates.length} suffix={" db"} title={"Nyilvántartott oklevelek"} />}

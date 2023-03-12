@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import "../styles/pages/home.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../lib/auth";
-
+import { useInfo } from "../lib/info";
 
 interface FunctionCardProps {
 	title: string;
@@ -57,16 +57,21 @@ function Authentication() {
 					emailes azonosítást követően egyszerre megtekintheti az összes
 					kiállított oklevelét.
 				</p>
-				{isLoggedIn && <>
-					<p style={{textAlign: "center"}}><b>Ön már sikeresen azonosította magát!</b></p>
-					<Button onClick={() => navigate("/dashboard")} type={"primary"}>
-						Személyes oldal
-				</Button>
-				</>}
-				{!isLoggedIn && <Button onClick={() => navigate("/authentication")} type={"primary"}>
-					Azonosítás
-				</Button>}
-				
+				{isLoggedIn && (
+					<>
+						<p style={{ textAlign: "center" }}>
+							<b>Ön már sikeresen azonosította magát!</b>
+						</p>
+						<Button onClick={() => navigate("/dashboard")} type={"primary"}>
+							Személyes oldal
+						</Button>
+					</>
+				)}
+				{!isLoggedIn && (
+					<Button onClick={() => navigate("/authentication")} type={"primary"}>
+						Azonosítás
+					</Button>
+				)}
 			</>
 		</FunctionCard>
 	);
@@ -88,11 +93,15 @@ function About() {
 }
 
 export default function Home() {
+	const {owner} = useInfo();
 	return (
-		<Row gutter={[16, 32]} justify={"center"}>
-			<QuickView />
-			<Authentication />
-			<About />
-		</Row>
+		<>
+			{owner && <h1 style={{textAlign: "center", marginBottom: "3rem", fontSize: "1.5rem"}}>Üdvözöljük a(z) {owner.name} rendszerében!</h1>}
+			<Row gutter={[16, 32]} justify={"center"}>
+				<QuickView />
+				<Authentication />
+				<About />
+			</Row>
+		</>
 	);
 }

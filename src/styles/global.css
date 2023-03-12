@@ -1,17 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
-.logo-navbar  {
-	height: 100%;
-	padding: 0.7rem 0rem;
+.navbar {
 	display: flex;
+	color: white !important;
+	align-items: center;
+	width: 100%;
+	overflow: hidden;
+}
+
+.title-navbar h1 {
+	margin: 0;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: none;
+}
+
+@media screen and (min-width: 750px) {
+	.title-navbar h1 {
+		display: initial;
+	}
+}
+
+.logo-navbar  {
+	margin-right: 2rem;
+	height: 50%;
+	display: flex;
+	align-items: center;
 }
 
 .logo-navbar img {
 	height: 100%;
+	cursor: pointer;
 }
 
 .logo-sidebar img{
 	width: 100%;
 	padding: 2rem;
+}
+
+.fullscreen-spinner {
+	height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media print {

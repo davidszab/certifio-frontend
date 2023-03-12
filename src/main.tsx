@@ -18,6 +18,8 @@ import axios from "axios";
 import AdminLayout from "./pages/admin/Layout";
 import AdminDashboard from "./pages/admin/Dashboard";
 import QuickView from "./pages/QuickView";
+import { InfoProvider } from "./lib/info";
+import About from "./pages/About";
 
 const router = createBrowserRouter([
 	{
@@ -39,11 +41,14 @@ const router = createBrowserRouter([
 						<Dashboard />
 					</ProtectedRoute>
 				)
-				// element: <Dashboard/>
 			},
 			{
 				path: "quick-view",
 				element: <QuickView/>
+			},
+			{
+				path: "about",
+				element: <About/>
 			},
 			{
 				path: "c/:id",
@@ -92,9 +97,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-	//   <React.StrictMode>
 	<AuthProvider>
-		<RouterProvider router={router} />
+		<InfoProvider>
+			<RouterProvider router={router} />
+		</InfoProvider>
 	</AuthProvider>
-	//   </React.StrictMode>,
 );
