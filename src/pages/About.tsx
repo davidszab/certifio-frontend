@@ -116,7 +116,7 @@ const projectQuestions = [
 			<p>
 				A Certifio használata ingyenes, azonban a felhasználóknak saját maguknak
 				kell gondoskodniuk a rendszer üzemeltetéséről. A jövőben tervezünk
-				elindítani egy menedzselt Platfrom as a Service szolgáltatást is, amely
+				elindítani egy menedzselt Software as a Service konstrukciót is, amely
 				az üzemeltetési feladatokat leemelné a felhasználók válláról előre
 				meghatározott havi díjas ellenében.
 			</p>
