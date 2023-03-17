@@ -1,31 +1,45 @@
-import { Row, Col, Card, Statistic, StatisticProps } from "antd";
+import { Row, Col, Card, Statistic, StatisticProps, Spin } from "antd";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import useAPIGet from "../../lib/api-request";
 
-function StatisticCard(props: StatisticProps){
-	return <Card>
-		<Statistic {...props}/>
-	</Card>
+function StatisticCard({isLoading, title, value}: {isLoading: Boolean, title: string, value?: number}){
+	const Core = () => {
+		return <Card>
+			<Statistic title={title} value={value}/>
+		</Card>
+	}
+	if(isLoading)
+		return <Spin><Core/></Spin>
+	else
+		return <Core/>
+}
+
+interface ApiResponse {
+	signatures: number,
+	bases: number,
+	certificates: number,
+	people: number
 }
 
 export default function AdminDashboard(){
-	return <>
-		<h1>Vezérlőpult</h1>
-		<Row gutter={[16, 32]} justify={"center"}>
-			<Col xs={24} md={20} lg={18}>
+	const {data, isLoading} = useAPIGet<ApiResponse>("info/statistics");
+		return <Row gutter={[16, 32]} justify={"center"}>
+			<Col xs={24} md={20}>
 				<Row gutter={[16, 32]} justify={"center"}>
-					<Col xs={12}>
-						<StatisticCard title={"Aláírások"}/>
+					<Col xs={24} md={12}>
+						<StatisticCard isLoading={isLoading} title={"Aláírások"} value={data?.signatures}/>
 					</Col>
-					<Col xs={12}>
-						<StatisticCard title={"Oklevéltörzsek"}/>
+					<Col xs={24} md={12}>
+						<StatisticCard isLoading={isLoading} title={"Oklevéltörzsek"} value={data?.bases}/>
 					</Col>
-					<Col xs={12}>
-						<StatisticCard title={"Kiadott oklevelek"}/>
+					<Col xs={24} md={12}>
+						<StatisticCard isLoading={isLoading} title={"Kiadott oklevelek"} value={data?.certificates}/>
 					</Col>
-					<Col xs={12}>
-						<StatisticCard title={"Nyilvántartott személyek"}/>
+					<Col xs={24} md={12}>
+						<StatisticCard isLoading={isLoading} title={"Nyilvántartott személyek"} value={data?.people}/>
 					</Col>
 				</Row>
 			</Col>
 		</Row>
-	</>
 }

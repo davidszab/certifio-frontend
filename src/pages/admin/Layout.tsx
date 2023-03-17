@@ -18,6 +18,11 @@ const items = [
 		icon: "mdi:signature"
 	},
 	{
+		label: "Személyek",
+		path: "people",
+		icon: "mdi:account-group"
+	},
+	{
 		label: "Oklevéltörzsek",
 		path: "bases",
 		icon: "mdi:pencil-ruler"
@@ -26,11 +31,6 @@ const items = [
 		label: "Oklevelek",
 		path: "certificates",
 		icon: "mdi:certificate"
-	},
-	{
-		label: "Személyek",
-		path: "people",
-		icon: "mdi:account-group"
 	}
 ]
 

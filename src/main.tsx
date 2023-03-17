@@ -20,6 +20,9 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import QuickView from "./pages/QuickView";
 import { InfoProvider } from "./lib/info";
 import About from "./pages/About";
+import AdminSignatures, {SignaturesForm} from "./pages/admin/Signatures";
+import AdminPeople, { PeopleForm } from "./pages/admin/People";
+import AdminBases, { BaseForm, CertificateForm } from "./pages/admin/Bases";
 
 const router = createBrowserRouter([
 	{
@@ -66,7 +69,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "",
-				element: <Navigate to={"dashboard"}/>
+				element: <Navigate to={"dashboard"} replace/>
 			},
 			{
 				path: "dashboard",
@@ -74,19 +77,31 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "signatures",
-				element: <h1>signatures</h1>
+				element: <AdminSignatures/>
+			},
+			{
+				path: "signatures/:id",
+				element: <SignaturesForm/>	
 			},
 			{
 				path: "bases",
-				element: <h1>certificate bases</h1>
+				element: <AdminBases/>
+			},
+			{
+				path: "bases/:id",
+				element: <BaseForm/>
 			},
 			{
 				path: "certificates",
-				element: <h1>certificates</h1>
+				element: <CertificateForm/>
 			},
 			{
 				path: "people",
-				element: <h1>people</h1>
+				element: <AdminPeople/>
+			},
+			{
+				path: "people/:id",
+				element: <PeopleForm/>
 			},
 			{
 				path: "settings",
